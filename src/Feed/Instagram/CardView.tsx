@@ -1,28 +1,10 @@
-import './Card.scss';
+import './CardView.scss';
 import React, {PureComponent} from 'react';
 import {formatNumber, formatRelative} from "./FormattingTools";
-
-export interface Comment {
-  username: string;
-  message: string;
-
-}
-
-export interface Card {
-  id: number;
-  liked: boolean;
-  saved: boolean;
-  username: string;
-  avatar: string;
-  totalLikes: number;
-  totalComments: number;
-  comments: Comment[];
-  images: string[];
-  createdDate: string;
-}
+import {CardPrototype} from "Services/CardPrototype";
 
 export interface CardProps {
-  item: Card;
+  item: CardPrototype;
 }
 
 export class CardView extends PureComponent<CardProps> {
@@ -36,7 +18,7 @@ export class CardView extends PureComponent<CardProps> {
   render() {
     const {item} = this.props;
     const {liked, saved} = this.state;
-    return <div className="card" data-id={item.id}>
+    return <div className="instagram-card" data-id={item.id}>
       <div className="card-header">
         <a href="#" className="avatar">
           <img src={item.avatar}/>

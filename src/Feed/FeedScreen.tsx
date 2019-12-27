@@ -1,15 +1,17 @@
 import React, {PureComponent} from 'react';
-import {Card, CardView} from "./Card";
+import {CardView} from "./Instagram/CardView";
 import {Autowired, Observer} from "coreact";
-import {FeedService} from "./FeedService";
+import {FeedService} from "Services/FeedService";
 import {VirtualizedList} from "../VirtualList";
+import {CardPrototype} from "Services/CardPrototype";
+import {StatusBar} from "./Instagram/StatusBar";
 
 
 @Observer([FeedService])
 export class FeedScreen extends PureComponent {
   feed = Autowired(FeedService, this);
   state = {
-    items: [] as Card[],
+    items: [] as CardPrototype[],
   };
   appendMore = async () => {
     this.setState({
@@ -28,7 +30,10 @@ export class FeedScreen extends PureComponent {
     const {items} = this.state;
     return <>
       <VirtualizedList
-        itemCount={items.length}
+        items={items}
+        header={<>
+          <StatusBar/>
+        </>}
         renderItem={index => {
           return <CardView item={items[index]}/>;
         }}
