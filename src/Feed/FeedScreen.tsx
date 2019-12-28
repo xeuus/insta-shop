@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {CardView} from "./Instagram/CardView";
+import {CardView} from "./CardView";
 import {Autowired, Observer} from "coreact";
 import {FeedService} from "./FeedService";
 import {VirtualList} from "Components/VirtualList";

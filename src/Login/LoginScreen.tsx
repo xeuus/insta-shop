@@ -28,6 +28,7 @@ export class LoginScreen extends PureComponent {
     await this.login.sendOTP(form.mobileNumber);
     this.routing.goto(this.routes.AuthConfirmPage());
   };
+
   render() {
     const {form} = this.state;
     return <>

@@ -39,7 +39,7 @@ export class LoginService extends ParallelJob {
     name: string
     otp: string
   }) => {
-    const job = await this.newProcess('confirm');
+    const job = await this.newProcess('login');
     try {
       const response = await this.networking.POST<{ token: string }>('/auth/register', user);
       const {token} = response.payload;
@@ -52,13 +52,11 @@ export class LoginService extends ParallelJob {
   };
 
   sendOTP = async (mobileNumber: string) => {
-    if (!this.codeSent) {
-      const response = await this.networking.GET<{ resendAt: number }>(`/auth/otp/${mobileNumber}`);
-      this.resendAt = Date.now() + (response.payload.resendAt * 1000);
-      this.remaining = response.payload.resendAt;
-      this.codeSent = true;
-      (this.timer as any).start();
-    }
+    const response = await this.networking.GET<{ resendAt: number }>(`/auth/otp/${mobileNumber}`);
+    this.resendAt = Date.now() + (response.payload.resendAt * 1000);
+    this.remaining = response.payload.resendAt;
+    this.codeSent = true;
+    (this.timer as any).start();
   };
 
   @Debounced(100)
@@ -95,7 +93,7 @@ export class LoginService extends ParallelJob {
 
 
   public login = async (username: string, password: string, type: 'otp' | 'password') => {
-    const job = await this.newProcess('confirm');
+    const job = await this.newProcess('login');
     try {
       const response = await this.networking.REQUEST<{ token: string }>({
         url: type == 'otp' ? '/auth/login/otp' : '/auth/login/password',
@@ -107,6 +105,7 @@ export class LoginService extends ParallelJob {
       });
       const {token} = response.payload;
       await this.user.useToken(token);
+      this.reset();
       job.succeed();
     } catch (e) {
       job.failed(e.payload.message, e.payload.validation);

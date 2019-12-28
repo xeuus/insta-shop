@@ -19,6 +19,10 @@ export class AuthConfirmScreen extends PureComponent {
       code: '',
     },
   };
+  componentDidMount(): void {
+    this.login.killProcess('login');
+  }
+
   onChange = (name: string, value: any) => this.setState({form: {...this.state.form, [name]: value}});
   resend = () => {
     this.login.sendOTP(this.login.mobileNumber);
@@ -28,7 +32,7 @@ export class AuthConfirmScreen extends PureComponent {
   };
 
   render() {
-    const {message, status} = this.login.getProcess('confirm');
+    const {message, status} = this.login.getProcess('login');
 
     const {form} = this.state;
     return <>

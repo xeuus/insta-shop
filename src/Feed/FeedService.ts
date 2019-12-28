@@ -55,7 +55,7 @@ export class FeedService {
         liked: false,
         ratio: a.ratio,
         username: a.username,
-        avatar: `https://picsum.photos/50/50?cached=${this.counter}`,
+        avatar: `https://placehold.it/50x50`,
         totalLikes: Math.floor(Math.random() * 100 + 4),
         totalComments: Math.floor(Math.random() * 400 + 4),
         comments: range(Math.floor(Math.random()*4)).map(i => ({message: this.messages[Math.floor(Math.random() * this.messages.length)], username: this.names[Math.floor(Math.random() * this.names.length)]})),

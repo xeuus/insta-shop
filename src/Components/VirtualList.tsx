@@ -36,7 +36,7 @@ export interface VirtualListProps {
 
 export class VirtualList extends Component<VirtualListProps> {
   static defaultProps: any = {
-    overscan: 6
+    overscan: 2
   };
   el: any = null;
   state = {

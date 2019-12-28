@@ -22,6 +22,11 @@ export class LoginPasswordScreen extends PureComponent {
       password: this.login.password,
     },
   };
+
+  componentDidMount(): void {
+    this.login.killProcess('login');
+  }
+
   onChange = (name: string, value: any) => this.setState({form: {...this.state.form, [name]: value}});
 
   submit = async ()=>{
@@ -32,7 +37,7 @@ export class LoginPasswordScreen extends PureComponent {
   };
 
   render() {
-    const {message, validation, status} = this.login.getProcess('confirm');
+    const {message, validation, status} = this.login.getProcess('login');
     const {form} = this.state;
     return <>
       <div className="container">

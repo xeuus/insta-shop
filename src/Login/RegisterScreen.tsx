@@ -23,6 +23,11 @@ export class RegisterScreen extends PureComponent {
       password: this.login.password,
     },
   };
+
+  componentDidMount(): void {
+    this.login.killProcess('login');
+  }
+
   onChange = (name: string, value: any) => this.setState({form: {...this.state.form, [name]: value}});
 
   submit = async () => {
