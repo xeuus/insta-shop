@@ -1,10 +1,10 @@
-import './StatusBar.scss';
+import './StatusBar.sass';
 import React, {PureComponent} from 'react';
 
-const leftArrow = require('./left-arrow.svg');
-const refresh = require('./refresh.svg');
-const screen = require('./screen.svg');
-const logo = require('./logo.png');
+const leftArrow = require('Assets/left-arrow.svg');
+const refresh = require('Assets/refresh.svg');
+const screen = require('Assets/screen.svg');
+const logo = require('Assets/logo.png');
 
 export class StatusBar extends PureComponent{
 

@@ -1,0 +1,149 @@
+$input-height: 40px!default
+$primary: #3897f0 !default
+$danger: #ff2955 !default
+$primary-light: rgba($primary, 0.1) !default
+$danger-light: rgba($danger, 0.1) !default
+.text-input
+  outline: none
+  background: transparent
+  border: none
+  display: block
+  width: 100%
+  text-align: initial
+  padding: 0
+  margin: 0
+
+  &:focus
+    .content
+      background: $primary-light
+
+  .content
+    position: relative
+    display: flex
+    flex-direction: column
+    justify-content: center
+    width: 100%
+    min-height: $input-height
+    background: #fafafa
+    border-radius: 4px
+    box-shadow: 0 0 0 1px #efefef
+
+  .feedback
+    display: none
+    padding: 4px 8px 0 8px
+    font-size: 10px
+    line-height: 1
+
+  label
+    align-items: center
+    position: absolute
+    font-weight: normal
+    padding: 0 16px
+    width: 100%
+    color: #a4a4a4
+    pointer-events: none
+    z-index: 20
+    white-space: nowrap
+    text-overflow: ellipsis
+    overflow: hidden
+
+  select, textarea, input
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    width: 100%
+    background: transparent
+    font-family: inherit
+    resize: none
+    line-height: initial
+    border: none
+    background-clip: padding-box
+    outline: none
+    padding: 0 16px
+    border-radius: 3px
+    appearance: none
+    height: $input-height
+    caret-color: #262626
+    color: transparent
+
+  textarea
+    padding: 8px 16px
+    height: auto
+    resize: vertical
+
+  &.is-textarea
+    label
+      top: 4px
+      height: $input-height
+
+  &.is-select
+    select
+      padding: 8px 16px
+      color: transparent
+
+      option
+        color: #262626
+
+    .icon
+      position: absolute
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 24px
+      font-size: 16px
+      height: 24px
+      left: 8px
+      z-index: 4
+      pointer-events: none
+      color: #414141
+
+  &.has-value
+    .content
+      box-shadow: 0 0 0 1px $primary-light
+
+    label:not(.free-type)
+      display: block
+      font-size: 10px
+      padding: 0 16px
+      top: 2px
+      height: $input-height * 0.4
+
+    textarea, input, select
+      color: #000
+
+    input, select
+      position: absolute
+      height: $input-height * 0.6
+      bottom: 2px
+
+    select
+      padding: 0 16px
+
+    textarea
+      padding: 0 16px
+      margin-top: 16px
+
+  &.is-disabled
+    pointer-events: none
+    opacity: 0.6
+
+  .postfix
+    position: absolute
+    display: flex
+    justify-content: center
+    align-items: center
+    font-size: 12px
+    left: 16px
+    z-index: 3
+    pointer-events: none
+    color: #414141
+
+
+  &.has-error
+
+    .content
+      background:  $danger-light
+      box-shadow: inset 0 0 0 1px $danger
+    .feedback
+      display: flex
+      color: $danger

@@ -64,6 +64,9 @@
     "react-router-dom": "^5.0.1"
   },
   "_moduleAliases": {
-    "Services": "dist/Services"
+    "Services": "dist/Services",
+    "Components": "dist/Components",
+    "Assets": "dist/Assets",
+    "Common": "dist/Common"
   }
 }

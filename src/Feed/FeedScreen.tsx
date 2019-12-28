@@ -1,10 +1,11 @@
 import React, {PureComponent} from 'react';
 import {CardView} from "./Instagram/CardView";
 import {Autowired, Observer} from "coreact";
-import {FeedService} from "Services/FeedService";
-import {VirtualizedList} from "../VirtualList";
-import {CardPrototype} from "Services/CardPrototype";
-import {StatusBar} from "./Instagram/StatusBar";
+import {FeedService} from "./FeedService";
+import {VirtualList} from "Components/VirtualList";
+import {CardPrototype} from "./CardPrototype";
+import {StatusBar} from "Common/StatusBar";
+import {Tabs} from "Common/Tabs";
 
 
 @Observer([FeedService])
@@ -25,15 +26,13 @@ export class FeedScreen extends PureComponent {
   componentDidMount(): void {
     this.appendMore();
   }
-
   render() {
     const {items} = this.state;
     return <>
-      <VirtualizedList
+      <VirtualList
         items={items}
-        header={<>
-          <StatusBar/>
-        </>}
+        header={<StatusBar/>}
+        footer={<Tabs/>}
         renderItem={index => {
           return <CardView item={items[index]}/>;
         }}

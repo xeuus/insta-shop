@@ -1,7 +1,7 @@
-import './CardView.scss';
+import './CardView.sass';
 import React, {PureComponent} from 'react';
 import {formatNumber, formatRelative} from "./FormattingTools";
-import {CardPrototype} from "Services/CardPrototype";
+import {CardPrototype} from "../CardPrototype";
 
 export interface CardProps {
   item: CardPrototype;
@@ -29,7 +29,7 @@ export class CardView extends PureComponent<CardProps> {
         </div>
       </div>
       <div className="card-image">
-        <img src={item.images[0]}/>
+        <img src={item.images[0]} style={{height: `calc(100vw / ${item.ratio})`}}/>
       </div>
       <div className="card-actions">
         <div className="like" data-active={liked} onClick={this.toggleLike}>

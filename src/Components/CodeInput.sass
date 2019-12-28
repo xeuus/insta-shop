@@ -1,0 +1,34 @@
+$input-height: 40px!default
+$primary: #3897f0 !default
+$primary-light: rgba($primary, 0.1) !default
+.code-input
+  position: relative
+  display: flex
+  justify-content: center
+  width: 100%
+  height: $input-height
+  .content
+    display: flex
+  input
+    display: flex
+    justify-content: center
+    align-items: center
+    flex: 1 1 auto
+    width: 100%
+    padding: 0 0
+    text-align: center
+    outline: none
+    font-size: 16px
+    font-weight: normal
+    background: #fafafa
+    height: 100%
+    border: none
+    box-shadow: 0 0 0 1px #efefef
+    margin: 0 8px
+    max-width: 48px
+    z-index: 2
+    &:focus
+      border-bottom: $primary 1px solid
+    &.has-value
+      box-shadow: 0 0 0 1px $primary-light
+      background: $primary-light

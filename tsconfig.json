@@ -25,6 +25,15 @@
     "paths": {
       "Services/*": [
         "src/Services/*"
+      ],
+      "Components/*": [
+        "src/Components/*"
+      ],
+      "Assets/*": [
+        "src/Assets/*"
+      ],
+      "Common/*": [
+        "src/Common/*"
       ]
     }
   },

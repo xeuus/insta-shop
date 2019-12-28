@@ -1,0 +1,47 @@
+.instagram-tabs
+  display: flex
+  align-items: center
+  height: 44px
+  box-shadow: 0 -1px 1px 0 rgba(#000, 0.1)
+  background: #fff
+  padding: 0 8px
+
+  .tab-icon
+    flex: 1 1 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 42px
+    height: 42px
+    cursor: pointer
+    opacity: 1!important
+
+    .icon
+      transform: scale(0.9)
+      background-size: 411px 393px
+      background-image: url("../Assets/resources.png")
+      height: 24px
+      width: 24px
+      background-repeat: no-repeat
+      &.home
+        background-position: -325px -294px
+      &.search
+        background-position: -75px -344px
+      &.add
+        background-position: -200px -319px
+      &.activity
+        background-position: -275px -294px
+      &.profile
+        background-position: -275px -344px
+      
+    &.active
+      .icon.home
+        background-position: -300px -294px
+      .icon.search
+        background-position: -50px -344px
+      .icon.add
+        filter: invert(100%)
+      .icon.activity
+        background-position: -225px -294px
+      .icon.profile
+        background-position: -250px -344px

@@ -26,7 +26,7 @@ function createScheduler(callback: any, scheduler: any) {
   };
 }
 
-export interface VirtualizedListProps {
+export interface VirtualListProps {
   renderItem: (index: number) => any;
   items: any[]
   overscan?: number
@@ -34,7 +34,7 @@ export interface VirtualizedListProps {
   footer?: ReactNode
 }
 
-export class VirtualizedList extends Component<VirtualizedListProps> {
+export class VirtualList extends Component<VirtualListProps> {
   static defaultProps: any = {
     overscan: 6
   };
@@ -132,10 +132,10 @@ export class VirtualizedList extends Component<VirtualizedListProps> {
         updateHeight={this.updateHeight}
       />)
     }
-    return <section style={{paddingTop, paddingBottom}}>
+    return <section style={{display: 'flex', flexDirection: 'column', flex: '1 0 auto', paddingTop, paddingBottom}}>
       {header && <header style={{position: 'sticky', top: 0, zIndex: 1000}}>{header}</header>}
       {items.length > 0 && items}
-      {footer && <footer style={{position: 'sticky', bottom: 0, zIndex: 1000}}>{footer}</footer>}
+      {footer && <footer style={{position: 'sticky', bottom: 0, marginTop: 'auto', zIndex: 1000}}>{footer}</footer>}
     </section>
   }
 
@@ -189,7 +189,7 @@ class Item extends PureComponent<ItemProps> {
 
   render() {
     const {index, renderItem} = this.props;
-    return <article ref={this.wrapper} className="vt-item" data-index={index}>
+    return <article ref={this.wrapper} data-index={index}>
       {renderItem(index)}
     </article>;
   }

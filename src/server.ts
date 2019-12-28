@@ -10,18 +10,18 @@ const server = new Server({
   mode: process.env.NODE_ENV,
   provider: () => require('./Provider'),
   assets: process.env.NODE_ENV != 'production' ? [
+    '/assets/fonts/font.css',
     '/dist/app.js',
   ] : [
+    '/assets/fonts/font.css',
     '/dist/app.js.gz',
     '/dist/app.css',
   ],
-  apiPrefix: '/api',
   proxies: {
     default: {
       address: process.env.API_ADDR,
     }
   },
-  envKeys: ['API_ADDR'],
   encrypt: true,
   version: +version,
   publicDir: ['/assets', path.resolve(__dirname, '../assets')],

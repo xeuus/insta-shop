@@ -6,13 +6,15 @@ export interface Comment {
 }
 
 export interface CardPrototype {
-  id: number;
+  id: string;
+  title: string;
   liked: boolean;
   saved: boolean;
   username: string;
   avatar: string;
   totalLikes: number;
   totalComments: number;
+  ratio: number;
   comments: Comment[];
   images: string[];
   createdDate: string;
