@@ -8,8 +8,6 @@ body, html
   color: #262626
   height: 100vh
   height: calc(var(--vh, 1vh) * 100)
-  overflow-x: hidden
-  overflow-y: auto
 
 
 body, html, label, input, textarea
@@ -20,7 +18,8 @@ main
   flex-direction: column
   min-height: 100%
 
-
+textarea
+  resize: vertical
 a
   font-weight: bold
   color: $primary

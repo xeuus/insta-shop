@@ -31,7 +31,7 @@ export class StatusBar extends PureComponent<StatusBarProps> {
       </div>
 
 
-      {onAction && <div className="status-action" onClick={onAction}>
+      {actionName && <div className="status-action" onClick={onAction}>
         {actionName}
       </div>}
 

@@ -205,7 +205,7 @@ function round(num: number, d: number) {
 export function formatNumber(v: any){
   let value = v;
   if (typeof value === 'undefined' || value === null) {
-    return '';
+    return '0';
   }
   const fx = 2;
   value = parseFloat(value.toString());
@@ -233,5 +233,5 @@ export function formatNumber(v: any){
       }
     }
   }
-  return op;
+  return op.toString();
 }

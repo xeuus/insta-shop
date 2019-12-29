@@ -25,11 +25,8 @@ export class RoutesService {
   public UploadCamera() {
     return '/upload/';
   }
-  public UploadFromLibrary() {
-    return '/upload/library/';
-  }
-  public UploadVoice() {
-    return '/upload/voice/';
+  public Post() {
+    return '/upload/post/';
   }
   public ActivityPage() {
     return '/activity/';

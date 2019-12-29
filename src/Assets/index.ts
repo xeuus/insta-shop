@@ -3,5 +3,6 @@ export const Assets = {
   Logo: require('./logo.png'),
   Refresh: require('./refresh.svg'),
   Upload: require('./icons8-upload-24.png'),
+  Delete: require('./icons8-delete-24.png'),
   Empty:  'data:image/gif;base64,R0lGODlhAQABAAAAACw=',
 };

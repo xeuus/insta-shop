@@ -10,14 +10,8 @@ export class Tabs extends PureComponent {
 
   render() {
     return <div className="add-tabs">
-      <NavLink to={this.routes.UploadFromLibrary()} className="tab-item" exact>
-        Library
-      </NavLink>
       <NavLink to={this.routes.UploadCamera()} className="tab-item" exact>
         Photo
-      </NavLink>
-      <NavLink to={this.routes.UploadVoice()} className="tab-item" exact>
-        Voice
       </NavLink>
     </div>
   }

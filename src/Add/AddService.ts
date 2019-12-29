@@ -18,6 +18,10 @@ export class AddService {
   };
 
 
+  delete = async () => {
+    this.image = null;
+  };
+
   post = async (title: string) => {
     await this.networking.POST('/user/post', {
       photoId: this.image.id,
@@ -26,7 +30,7 @@ export class AddService {
     this.image = null;
   };
 
-  upload<T>(address: string, payload: { [key: string]: any }) {
+  private upload<T>(address: string, payload: { [key: string]: any }) {
     if (this.input) {
       document.documentElement.removeChild(this.input);
       this.input = null;

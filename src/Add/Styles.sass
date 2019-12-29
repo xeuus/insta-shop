@@ -4,6 +4,30 @@ $tab: 40px
 $button: 40px
 $button-ring: 10px
 
+.add--post
+  .post-container
+    position: relative
+    width: 100%
+    display: flex
+    align-items: center
+    img
+      width: 56px
+      height: 56px
+      flex: 0 0 auto
+      border-radius: 3px
+    textarea
+      width: 100%
+      padding: 12px
+      background: transparent
+      outline: none
+      border: none
+      resize: none
+    .stats
+      position: absolute
+      top: 0
+      right: 0
+      font-size: 10px
+      opacity: 0.5
 .add-tabs
   position: absolute
   bottom: 0
@@ -22,71 +46,6 @@ $button-ring: 10px
     &.active
       font-weight: 600
       color: #000
-
-.add--voice
-  header
-    z-index: 10
-    height: $top
-
-  .voice-holder
-    display: flex
-    position: absolute
-    justify-content: center
-    align-items: center
-    top: $top
-    bottom: $bottom+$tab
-    width: 100%
-    background: #eee
-
-
-  .ribbon
-    position: absolute
-    bottom: $tab
-    display: flex
-    justify-content: center
-    align-items: center
-    background: #fff
-    flex: 0 0 auto
-    height: $bottom
-    width: 100%
-    box-shadow: 0 -1px 0 0 rgba(#000, 0.1)
-    .button-holder
-      display: flex
-      justify-content: center
-      align-items: center
-      flex: 1 1 100%
-      opacity: 0.5
-      button
-        width: 64px
-        height: 64px
-    .upload-button
-      position: absolute
-      display: flex
-      justify-content: center
-      align-items: center
-      width: $button + $button-ring*2
-      height: $button + $button-ring*2
-      border-radius: 64px
-      left: 50%
-      transform: translateX(-50%)
-      border: none
-      outline: none
-      background: #fff
-      box-shadow: inset 0 0 0 $button-ring rgba(#000, 0.25)
-      cursor: pointer
-      z-index: 16
-
-      &:after
-        position: absolute
-        pointer-events: none
-        display: flex
-        content: ''
-        width: $button
-        height: $button
-        border-radius: 64px
-        box-shadow: 2px 2px 2px 0 rgba(#000, 0.25)
-
-
 
 .add--take-picture
   position: relative
@@ -108,14 +67,24 @@ $button-ring: 10px
     bottom: $bottom+$tab
     width: 100%
     background: #eee
-    .slide-show
-      z-index: 10
+    overflow: hidden
+    canvas
+      width: 100%
+      height: 100%
     label
       position: absolute
+      text-align: center
+      max-width: 120px
     img
       object-fit: contain
       width: 100%
       height: 100%
+      z-index: 10
+    .bg-overlay
+      z-index: 6
+      filter: blur(32px)
+      transform: scale(3)
+      position: absolute
 
   .ribbon
     position: absolute
@@ -126,6 +95,7 @@ $button-ring: 10px
     background: #fff
     flex: 0 0 auto
     height: $bottom
+    z-index: 50
     width: 100%
     box-shadow: 0 -1px 0 0 rgba(#000, 0.1)
     .button-holder

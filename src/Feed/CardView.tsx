@@ -9,8 +9,8 @@ export interface CardProps {
 
 export class CardView extends PureComponent<CardProps> {
   state = {
-    liked: this.props.item.liked,
-    saved: this.props.item.saved,
+    liked: false,
+    saved: false,
   };
   toggleLike = () => this.setState({liked: !this.state.liked});
   toggleSave = () => this.setState({saved: !this.state.saved});
@@ -29,7 +29,7 @@ export class CardView extends PureComponent<CardProps> {
         </div>
       </div>
       <div className="card-image">
-        <img src={item.images[0]} style={{height: `${100 / item.ratio}vw`}}/>
+        <img src={item.src} style={{height: `${100 / item.ratio}vw`}}/>
       </div>
       <div className="card-actions">
         <div className="like" data-active={liked} onClick={this.toggleLike}>
@@ -42,15 +42,19 @@ export class CardView extends PureComponent<CardProps> {
           <span className="icon"/>
         </div>
       </div>
-      <a href="#" className="likes-count">
+      <label className="comment">
+        <a href="#">{item.username}</a>
+        <span>{item.title}</span>
+      </label>
+      {item.totalLikes > 0 && <a href="#" className="likes-count">
         <span>{formatNumber(item.totalLikes)}</span>&nbsp;<span>likes</span>
-      </a>
-      <a href="#" className="all-comments">
+      </a>}
+      {item.totalComments > 3 && <a href="#" className="all-comments">
         <span>View all</span>&nbsp;
         <span>{formatNumber(item.totalComments)}</span>&nbsp;
         <span>comments</span>
-      </a>
-      {item.comments.map((comment, i) => {
+      </a>}
+      {item.comments && item.comments.map((comment, i) => {
         return <label key={i} className="comment">
           <a href="#">{comment.username}</a>
           <span>{comment.message}</span>

@@ -2,12 +2,13 @@ import './SlideShow.sass';
 import React, {Component, createRef} from 'react';
 import {findDOMNode} from 'react-dom';
 import {range} from "coreact";
+
 export type ImageSliderProps = {
   count: number;
   renderItem: (index: number) => any;
   className?: string;
-  value: number;
-  onChange: (value: number) => any;
+  value?: number;
+  onChange?: (value: number) => any;
   nobullets?: boolean;
 }
 export type ImageSliderState = {
@@ -15,7 +16,9 @@ export type ImageSliderState = {
   lazyOffset: number,
   offsetFromRight: number,
   offset: number;
+  value: number;
 }
+
 export class SlideShow extends Component<ImageSliderProps> {
   base: HTMLDivElement = null;
   wrapper = createRef<HTMLDivElement>();
@@ -29,7 +32,23 @@ export class SlideShow extends Component<ImageSliderProps> {
     lazyOffset: 0,
     offsetFromRight: 0,
     offset: 0,
+    value: 0,
   };
+  onChange = (value: number) =>  {
+    if(typeof this.props.value !== 'undefined'){
+      this.props.onChange(value);
+    }else {
+      this.setState({value});
+    }
+  };
+
+  get value(){
+    if(typeof this.props.value !== 'undefined'){
+      return this.props.value;
+    }else {
+      return  this.state.value;
+    }
+  }
   componentDidMount(): void {
     const element = findDOMNode(this) as HTMLDivElement;
     this.base = element;
@@ -43,8 +62,9 @@ export class SlideShow extends Component<ImageSliderProps> {
     element.addEventListener('mouseleave', this.mouseUp);
     this.init();
     const elm = this.wrapper.current;
-    elm.style.marginLeft = `${(this.props.value) * (this.itemWidth)}px`;
+    elm.style.marginLeft = `${(this.value) * (this.itemWidth)}px`;
   }
+
   componentWillUnmount(): void {
     const element = this.base;
     element.removeEventListener('touchstart', this.mouseDown);
@@ -56,6 +76,7 @@ export class SlideShow extends Component<ImageSliderProps> {
     element.removeEventListener('mouseup', this.mouseUp);
     element.removeEventListener('mouseleave', this.mouseUp);
   }
+
   init = () => {
     const element = this.base;
     const styles = window.getComputedStyle(element);
@@ -63,9 +84,8 @@ export class SlideShow extends Component<ImageSliderProps> {
     this.forceUpdate();
   };
   mouseDown = (e: any) => {
-    const {value} = this.props;
     this.lastTouch = this.getX(e);
-    this.posInitial = value;
+    this.posInitial = this.value;
     this.pressed = true;
     this.diff = 0;
     const element = this.wrapper.current;
@@ -73,26 +93,25 @@ export class SlideShow extends Component<ImageSliderProps> {
   };
   mouseDrag = (e: any) => {
     if (this.pressed) {
-      const {value} = this.props;
       const {count} = this.props;
       const element = this.wrapper.current;
       const x = this.getX(e);
       this.diff = x - this.lastTouch;
       let vary = this.diff / this.itemWidth;
-      const xc = value + vary;
+      const xc = this.value + vary;
       if (xc > 0) {
         vary = 0;
       }
       if (xc < 1 - count) {
         vary = 0;
       }
-      element.style.marginLeft = `${(value + vary) * (this.itemWidth)}px`;
+      element.style.marginLeft = `${(this.value + vary) * (this.itemWidth)}px`;
     }
   };
   mouseUp = (e: any) => {
     this.init();
     const {count} = this.props;
-    let {value, onChange} = this.props;
+    let value = this.value;
     this.pressed = false;
     const element = this.wrapper.current;
     const vary = this.diff / this.itemWidth;
@@ -107,22 +126,27 @@ export class SlideShow extends Component<ImageSliderProps> {
       }
     }
     element.classList.add('slide-show-shifting');
-    element.style.marginLeft = `${(value) * (this.itemWidth)}px`;
-    onChange(value)
+    element.style.marginLeft = `${value * (this.itemWidth)}px`;
+    this.onChange(value)
   };
+
   UNSAFE_componentWillReceiveProps(nextProps: Readonly<ImageSliderProps>, nextContext: any): void {
-    if (this.props.value !== nextProps.value) {
-      const element = this.wrapper.current;
-      element.classList.add('slide-show-shifting');
-      element.style.marginLeft = `${(nextProps.value) * (this.itemWidth)}px`;
-      this.forceUpdate()
+    if(typeof nextProps.value !== 'undefined') {
+      if (this.props.value !== nextProps.value) {
+        const element = this.wrapper.current;
+        element.classList.add('slide-show-shifting');
+        element.style.marginLeft = `${(nextProps.value) * (this.itemWidth)}px`;
+        this.forceUpdate()
+      }
     }
   }
+
   render() {
-    const {count, className, value, nobullets, renderItem} = this.props;
-    const off = value * -1;
+    const {count, className, nobullets, renderItem} = this.props;
+    const off = this.value * -1;
     return <div className={`slide-show ${className || ''}`}>
-      <div ref={this.wrapper} className="slide-show--wrapper" style={{width: this.itemWidth ? (this.itemWidth * count) : 'auto'}}>
+      <div ref={this.wrapper} className="slide-show--wrapper"
+           style={{width: this.itemWidth ? (this.itemWidth * count) : 'auto'}}>
         {range(count).map((i) => <div
           key={i}
           className="slide-show--item"
@@ -139,5 +163,6 @@ export class SlideShow extends Component<ImageSliderProps> {
       </div>}
     </div>;
   }
+
   private getX = (e: any) => (e.touches && e.touches[0] && e.touches[0].clientX) || e.clientX;
 }
