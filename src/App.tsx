@@ -10,6 +10,8 @@ import {AuthConfirmScreen} from "./Login/AuthConfirmScreen";
 import {RegisterScreen} from "./Login/RegisterScreen";
 import {AddScreen} from "./Add/AddScreen";
 import {SearchScreen} from "./Search/SearchScreen";
+import {ActivityScreen} from "./Activity/ActivityScreen";
+import {ProfileScreen} from "./Profile/ProfileScreen";
 
 
 @Observer([UserService])
@@ -24,8 +26,8 @@ export class App extends PureComponent {
           <Route path={this.routes.FeedsPage()} component={FeedScreen} exact/>
           <Route path={this.routes.SearchPage()} component={SearchScreen} exact/>
           <Route path={this.routes.AddPage()} component={AddScreen} exact/>
-          <Route path={this.routes.ActivityPage()} component={FeedScreen} exact/>
-          <Route path={this.routes.ProfilePage()} component={FeedScreen} exact/>
+          <Route path={this.routes.ActivityPage()} component={ActivityScreen} exact/>
+          <Route path={this.routes.ProfilePage()} component={ProfileScreen} exact/>
           <Redirect from="*" to={this.routes.FeedsPage()}/>
         </Switch>
       </>

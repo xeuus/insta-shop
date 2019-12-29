@@ -1,5 +1,6 @@
 import React, {Component, createRef, PureComponent, ReactNode} from 'react'
 import throttle from 'lodash/throttle';
+import debounce from 'lodash/debounce';
 
 
 const requestAnimationFrame = typeof window != 'undefined' ? ((window as any).requestAnimationFrame ||
@@ -29,15 +30,12 @@ function createScheduler(callback: any, scheduler: any) {
 export interface VirtualListProps {
   renderItem: (index: number) => any;
   items: any[]
-  overscan?: number
   header?: ReactNode
   footer?: ReactNode
+  className?: string
 }
 
 export class VirtualList extends Component<VirtualListProps> {
-  static defaultProps: any = {
-    overscan: 2
-  };
   el: any = null;
   state = {
     paddingBottom: 0,
@@ -53,59 +51,60 @@ export class VirtualList extends Component<VirtualListProps> {
   updateHeight = (index: number, height: number) => this.cachedHeights[index] = height;
 
   handleScroll = () => {
-    const {items, overscan} = this.props;
+    const {items} = this.props;
+    const overScan = 4;
     const {pageYOffset} = this.el;
     const {clientHeight} = window.document.documentElement;
-    const upper = pageYOffset + clientHeight;
+    const offset = pageYOffset + clientHeight * 3 / 7;
 
-
-    if (Math.abs(upper - this.lastOffset) < this.lastHeight) {
+    if (Math.abs(offset - this.lastOffset) < this.lastHeight) {
       return;
     }
-
-
+    this.endingHandler();
     let acc = 0;
     for (let i = 0; i < this.cachedHeights.length; i++) {
-      const h = this.cachedHeights[i] || 0;
-      if (acc >= upper || acc + h >= upper) {
+      const height = this.cachedHeights[i] || 0;
+      const endingEdge = acc + height;
+      if (endingEdge >= offset) {
         let start = i - 2;
         let visibleRowCount = 3;
-        if (overscan) {
-          start = Math.max(0, start - (start % overscan));
-          visibleRowCount += overscan;
-        }
-
-        const st = Math.max(Math.floor(start), 0);
-        const end = Math.min(Math.ceil(start) + 1 + visibleRowCount, items.length);
-
-        if (this.startIndex === st && this.endIndex === end) {
+        start = Math.max(0, start - (start % overScan));
+        visibleRowCount += overScan;
+        const end = Math.min(start + 1 + visibleRowCount, items.length);
+        if (this.startIndex === start && this.endIndex === end) {
           return;
         }
-        this.startIndex = st;
+        this.startIndex = start;
         this.endIndex = end;
-        let sum1 = 0;
-        for (let i = 0; i < this.startIndex; i++) {
-          sum1 += this.cachedHeights[i] || 0;
+        let paddingTop = acc;
+        for (let j = start; j < i; j++) {
+          paddingTop -= this.cachedHeights[j] || 0
         }
-
-        let sum = 0;
+        let paddingBottom = 0;
         for (let i = this.endIndex; i < this.cachedHeights.length; i++) {
-          sum += this.cachedHeights[i] || 0;
+          paddingBottom += this.cachedHeights[i] || 0;
         }
-        this.lastOffset = upper;
-        this.lastHeight = h;
-
         this.setState({
-          paddingTop: sum1,
-          paddingBottom: sum,
+          paddingTop,
+          paddingBottom,
         });
+        this.lastOffset = offset;
+        this.lastHeight = height;
         return;
       }
-      acc += h;
+      acc += height;
     }
   };
 
-  scrollListener = throttle(createScheduler(this.handleScroll, requestAnimationFrame), 250, {trailing: true});
+  endingHandler = debounce(this.handleScroll, 50, {
+    trailing: true,
+    leading: true,
+  });
+
+  scrollListener = throttle(createScheduler(this.handleScroll, requestAnimationFrame), 250, {
+    trailing: true,
+    leading: true,
+  });
 
   componentDidMount() {
     if (!this.el) {
@@ -116,26 +115,26 @@ export class VirtualList extends Component<VirtualListProps> {
   }
 
   componentWillUnmount(): void {
-    this.el.removeEventListener('scroll', this.scrollListener)
+    this.el.removeEventListener('scroll', this.scrollListener);
   }
 
   render() {
     const {paddingBottom, paddingTop} = this.state;
-    const {items: raw, header, footer, renderItem} = this.props;
-    const items = [];
+    const {items, header, footer, renderItem, className} = this.props;
+    const chunk = [];
     for (let i = this.startIndex; i < this.endIndex; i++) {
-      items.push(<Item
+      chunk.push(<Item
         key={i}
         index={i}
-        renderItem={index => raw[index] ? renderItem(index) : null}
+        renderItem={index => items[index] ? renderItem(index) : null}
         cachedHeights={this.cachedHeights}
         updateHeight={this.updateHeight}
       />)
     }
-    return <section style={{display: 'flex', flexDirection: 'column', flex: '1 0 auto', paddingTop, paddingBottom}}>
-      {header && <header style={{position: 'sticky', top: 0, zIndex: 1000}}>{header}</header>}
-      {items.length > 0 && items}
-      {footer && <footer style={{position: 'sticky', bottom: 0, marginTop: 'auto', zIndex: 1000}}>{footer}</footer>}
+    return <section className={className} style={{paddingTop, paddingBottom}}>
+      {header}
+      {chunk.length > 0 && chunk}
+      {footer}
     </section>
   }
 
@@ -157,7 +156,6 @@ class Item extends PureComponent<ItemProps> {
     try {
       const height = this.wrapper.current.getBoundingClientRect().height;
       if (height != cachedHeights[index]) {
-        console.log('updated ', index);
         updateHeight(index, height);
       }
     } catch (e) {

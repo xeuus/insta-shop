@@ -29,7 +29,7 @@ export class CardView extends PureComponent<CardProps> {
         </div>
       </div>
       <div className="card-image">
-        <img src={item.images[0]} style={{height: `${100/item.ratio}vw`}}/>
+        <img src={item.images[0]} style={{height: `${100 / item.ratio}vw`}}/>
       </div>
       <div className="card-actions">
         <div className="like" data-active={liked} onClick={this.toggleLike}>

@@ -183,9 +183,11 @@ function getPluralKey(n: number) {
 }
 export function formatRelative(value: any) {
   try {
-    const date = typeof value === 'number' ? value : Date.parse(value);
+    const dt = new Date(value);
+    const date = dt.getTime();
     const now = Date.now();
-    const d = date - now;
+    const offset = dt.getTimezoneOffset() * 60 * 1000;
+    const d = (date - now) + offset;
     const sign = Math.sign(d);
     const dx = dec(Math.abs(d));
     const idx = dx[1];

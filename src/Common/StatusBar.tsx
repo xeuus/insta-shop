@@ -1,31 +1,40 @@
 import './StatusBar.sass';
 import React, {PureComponent} from 'react';
-
-const leftArrow = require('Assets/left-arrow.svg');
-const refresh = require('Assets/refresh.svg');
-const screen = require('Assets/screen.svg');
-const logo = require('Assets/logo.png');
-
-export class StatusBar extends PureComponent{
+import {Autowired, Consumer, RoutingService} from "coreact";
+import {LeftArrow, Logo, Refresh} from "../Assets";
 
 
-  render(){
+export interface StatusBarProps {
+  onRefresh?: () => any;
+  onBack?: () => any;
+  onAction?: () => any;
+  actionName?: string;
+  title?: string;
+}
+
+@Consumer
+export class StatusBar extends PureComponent<StatusBarProps> {
+  router = Autowired(RoutingService, this);
+
+  render() {
+    const {title, onRefresh, onBack, onAction, actionName} = this.props;
     return <div className="instagram-status-bar">
-
-      <div className="status-icon">
-        <img src={leftArrow}/>
-      </div>
-      <div className="status-icon">
-        <img src={refresh}/>
-      </div>
+      {onBack && <div className="status-icon" onClick={onBack}>
+        <img src={LeftArrow}/>
+      </div>}
+      {onRefresh && <div className="status-icon" onClick={onRefresh}>
+        <img src={Refresh}/>
+      </div>}
 
       <div className="status-logo">
-        <img src={logo}/>
+        {title ? title : <img src={Logo}/>}
       </div>
 
-      <div className="status-icon">
-        <img src={screen}/>
-      </div>
+
+      {onAction && <div className="status-action" onClick={onAction}>
+        {actionName}
+      </div>}
+
     </div>
   }
 }

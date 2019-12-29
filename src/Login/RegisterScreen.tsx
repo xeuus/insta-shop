@@ -95,7 +95,7 @@ export class RegisterScreen extends PureComponent {
         <hr className="my-5"/>
         <div className="text-center text-muted">
           <span>Already have an account?</span>&nbsp;
-          <Link to={this.routes.LoginOTPPage()}>
+          <Link to={this.routes.LoginPasswordPage()}>
             Sign In
           </Link>
         </div>

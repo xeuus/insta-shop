@@ -1,13 +1,23 @@
 .add-post-container
+  @keyframes animate-thumbnail-blink
+    0%
+      opacity: 0.5
+    100%
+      opacity: 1
+
   display: flex
   padding: 16px
+
   .thumbnail
     width: 100px
     height: 100px
     margin-right: 8px
-    border-radius: 4px
     background: #eee
     object-fit: cover
+
+    &[data-blink="true"]
+      animation: animate-thumbnail-blink 0.4s alternate infinite ease-in-out
+
   textarea
     padding: 8px
     outline: none

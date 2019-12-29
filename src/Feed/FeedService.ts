@@ -5,8 +5,6 @@ import {Networking} from "Services/Networking";
 @Service
 export class FeedService {
   private networking = Autowired(Networking, this);
-  @Observable
-  list: CardPrototype[] = [];
 
   counter: number = 0;
   messages: string[];

@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {CardView} from "./CardView";
-import {Autowired, Observer} from "coreact";
+import {Autowired, Consumer, Observer} from "coreact";
 import {FeedService} from "./FeedService";
 import {VirtualList} from "Components/VirtualList";
 import {CardPrototype} from "./CardPrototype";
@@ -8,7 +8,7 @@ import {StatusBar} from "Common/StatusBar";
 import {Tabs} from "Common/Tabs";
 
 
-@Observer([FeedService])
+@Consumer
 export class FeedScreen extends PureComponent {
   feed = Autowired(FeedService, this);
   state = {
@@ -16,13 +16,9 @@ export class FeedScreen extends PureComponent {
   };
   appendMore = async () => {
     this.setState({
-      items: [
-        ...this.state.items,
-        ...await this.feed.loadMore(),
-      ],
+      items: await this.feed.loadMore(),
     });
   };
-
   componentDidMount(): void {
     this.appendMore();
   }
@@ -30,9 +26,18 @@ export class FeedScreen extends PureComponent {
     const {items} = this.state;
     return <>
       <VirtualList
+        className="d-flex flex-column flex-fill flex-shrink-0"
         items={items}
-        header={<StatusBar/>}
-        footer={<Tabs/>}
+        header={
+          <header className="sticky-top">
+            <StatusBar/>
+          </header>
+        }
+        footer={
+          <footer className="sticky-bottom mt-auto">
+            <Tabs/>
+          </footer>
+        }
         renderItem={index => {
           return <CardView item={items[index]}/>;
         }}
