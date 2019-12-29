@@ -22,8 +22,14 @@ export class RoutesService {
   public SearchPage() {
     return '/search/';
   }
-  public AddPage() {
-    return '/add/';
+  public UploadCamera() {
+    return '/upload/';
+  }
+  public UploadFromLibrary() {
+    return '/upload/library/';
+  }
+  public UploadVoice() {
+    return '/upload/voice/';
   }
   public ActivityPage() {
     return '/activity/';

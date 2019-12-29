@@ -27,7 +27,7 @@ export class FeedScreen extends PureComponent {
     return <>
       <VirtualList
         className="d-flex flex-column flex-fill flex-shrink-0"
-        items={items}
+        count={items.length}
         header={
           <header className="sticky-top">
             <StatusBar/>

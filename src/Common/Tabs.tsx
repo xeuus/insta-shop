@@ -16,7 +16,7 @@ export class Tabs extends PureComponent {
       <NavLink to={this.routes.SearchPage()} className="tab-icon" exact>
         <div className="icon search"/>
       </NavLink>
-      <NavLink to={this.routes.AddPage()} className="tab-icon" exact>
+      <NavLink to={this.routes.UploadCamera()} className="tab-icon" exact>
         <div className="icon add"/>
       </NavLink>
       <NavLink to={this.routes.ActivityPage()} className="tab-icon" exact>

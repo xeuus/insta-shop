@@ -1,25 +1,166 @@
-.add-post-container
-  @keyframes animate-thumbnail-blink
-    0%
-      opacity: 0.5
-    100%
-      opacity: 1
+$top: 44px
+$bottom: 120px
+$tab: 40px
+$button: 40px
+$button-ring: 10px
 
+.add-tabs
+  position: absolute
+  bottom: 0
+  height: $tab
+  width: 100%
   display: flex
-  padding: 16px
+  .tab-item
+    font-size: 14px
+    display: flex
+    justify-content: center
+    align-items: center
+    flex: 1 1 100%
+    cursor: pointer
+    color: #262626
+    font-weight: 300
+    &.active
+      font-weight: 600
+      color: #000
 
-  .thumbnail
-    width: 100px
-    height: 100px
-    margin-right: 8px
+.add--voice
+  header
+    z-index: 10
+    height: $top
+
+  .voice-holder
+    display: flex
+    position: absolute
+    justify-content: center
+    align-items: center
+    top: $top
+    bottom: $bottom+$tab
+    width: 100%
     background: #eee
-    object-fit: cover
 
-    &[data-blink="true"]
-      animation: animate-thumbnail-blink 0.4s alternate infinite ease-in-out
 
-  textarea
-    padding: 8px
-    outline: none
-    border: none
-    background: transparent
+  .ribbon
+    position: absolute
+    bottom: $tab
+    display: flex
+    justify-content: center
+    align-items: center
+    background: #fff
+    flex: 0 0 auto
+    height: $bottom
+    width: 100%
+    box-shadow: 0 -1px 0 0 rgba(#000, 0.1)
+    .button-holder
+      display: flex
+      justify-content: center
+      align-items: center
+      flex: 1 1 100%
+      opacity: 0.5
+      button
+        width: 64px
+        height: 64px
+    .upload-button
+      position: absolute
+      display: flex
+      justify-content: center
+      align-items: center
+      width: $button + $button-ring*2
+      height: $button + $button-ring*2
+      border-radius: 64px
+      left: 50%
+      transform: translateX(-50%)
+      border: none
+      outline: none
+      background: #fff
+      box-shadow: inset 0 0 0 $button-ring rgba(#000, 0.25)
+      cursor: pointer
+      z-index: 16
+
+      &:after
+        position: absolute
+        pointer-events: none
+        display: flex
+        content: ''
+        width: $button
+        height: $button
+        border-radius: 64px
+        box-shadow: 2px 2px 2px 0 rgba(#000, 0.25)
+
+
+
+.add--take-picture
+  position: relative
+  display: flex
+  flex-direction: column
+  flex: 1 0 auto
+
+
+  header
+    z-index: 10
+    height: $top
+
+  .image-holder
+    display: flex
+    position: absolute
+    justify-content: center
+    align-items: center
+    top: $top
+    bottom: $bottom+$tab
+    width: 100%
+    background: #eee
+    .slide-show
+      z-index: 10
+    label
+      position: absolute
+    img
+      object-fit: contain
+      width: 100%
+      height: 100%
+
+  .ribbon
+    position: absolute
+    bottom: $tab
+    display: flex
+    justify-content: center
+    align-items: center
+    background: #fff
+    flex: 0 0 auto
+    height: $bottom
+    width: 100%
+    box-shadow: 0 -1px 0 0 rgba(#000, 0.1)
+    .button-holder
+      display: flex
+      justify-content: center
+      align-items: center
+      flex: 1 1 100%
+      opacity: 0.5
+      button
+        width: 64px
+        height: 64px
+    .upload-button
+      position: absolute
+      display: flex
+      justify-content: center
+      align-items: center
+      width: $button + $button-ring*2
+      height: $button + $button-ring*2
+      border-radius: 64px
+      left: 50%
+      transform: translateX(-50%)
+      border: none
+      outline: none
+      background: #fff
+      box-shadow: inset 0 0 0 $button-ring rgba(#000, 0.25)
+      cursor: pointer
+      z-index: 16
+
+      &:after
+        position: absolute
+        pointer-events: none
+        display: flex
+        content: ''
+        width: $button
+        height: $button
+        border-radius: 64px
+        box-shadow: 2px 2px 2px 0 rgba(#000, 0.25)
+

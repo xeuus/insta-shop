@@ -1,7 +1,7 @@
 import './StatusBar.sass';
 import React, {PureComponent} from 'react';
 import {Autowired, Consumer, RoutingService} from "coreact";
-import {LeftArrow, Logo, Refresh} from "../Assets";
+import {Assets} from "../Assets";
 
 
 export interface StatusBarProps {
@@ -20,14 +20,14 @@ export class StatusBar extends PureComponent<StatusBarProps> {
     const {title, onRefresh, onBack, onAction, actionName} = this.props;
     return <div className="instagram-status-bar">
       {onBack && <div className="status-icon" onClick={onBack}>
-        <img src={LeftArrow}/>
+        <img src={Assets.LeftArrow}/>
       </div>}
       {onRefresh && <div className="status-icon" onClick={onRefresh}>
-        <img src={Refresh}/>
+        <img src={Assets.Refresh}/>
       </div>}
 
       <div className="status-logo">
-        {title ? title : <img src={Logo}/>}
+        {title ? title : <img src={Assets.Logo}/>}
       </div>
 
 
