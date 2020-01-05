@@ -6,7 +6,12 @@ import {Networking} from "Services/Networking";
 export class FeedService {
   private networking = Autowired(Networking, this);
 
+  initialState: any = undefined;
   @Observable list: CardPrototype[] = [];
+
+  setState = (listState: any) => {
+    this.initialState = listState;
+  };
 
   async loadMore() {
     let lastTime = null;

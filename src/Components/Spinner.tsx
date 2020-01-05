@@ -6,6 +6,6 @@ export type SpinnerProps = {
   color?: string;
 }
 export const Spinner = (props: SpinnerProps) => {
-  const {size = 32, color = ''} = props;
+  const {size = 32} = props;
   return <img src={spinner} className="spinner" alt="" width={size} height={size}/>;
 };
